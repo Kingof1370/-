@@ -316,11 +316,10 @@ public partial class MainPage : ContentPage
             string tempFile = Path.Combine(FileSystem.CacheDirectory, $"Report_{dateStr.Replace("/", "_")}.txt");
             await File.WriteAllTextAsync(tempFile, reportContent);
 
-            await Share.Default.RequestAsync(new ShareTextRequest
+            await Share.Default.RequestAsync(new ShareFileRequest
             {
                 Title = $"سنگ آهن ونوس زاگرس - گزارش روزانه خط تولید {dateStr}",
-                Text = reportContent,
-                Uri = ShareSourceFile.CreateFromFile(tempFile) != null ? null : tempFile
+                File = new ShareFile(tempFile)
             });
         }
         catch (Exception ex)

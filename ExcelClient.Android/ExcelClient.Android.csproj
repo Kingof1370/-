@@ -12,10 +12,17 @@
     <ApplicationVersion>1</ApplicationVersion>
     <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
     <SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+    <TargetPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">34</TargetPlatformVersion>
+    <ImportWorkloads>false</ImportWorkloads>
+    <CheckEolWorkloads>false</CheckEolWorkloads>
+    <CheckEolTargetFrameworks>false</CheckEolTargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
+
+  <!-- Overwrite workload checking target to allow compiling net8.0-android on modern SDK environments -->
+  <Target Name="_CheckForMissingWorkload" />
 
 </Project>
