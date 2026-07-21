@@ -9,8 +9,8 @@ public static class ExcelParser
 {
     static ExcelParser()
     {
-        // EPPlus NonCommercial license requirement
-        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        // EPPlus 8+ NonCommercial license requirement
+        ExcelPackage.License.SetNonCommercialPersonal("Venus Zagros");
     }
 
     public static List<ExcelDataRow> ParseExcelFile(string filePath)
