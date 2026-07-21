@@ -9,8 +9,10 @@ public static class ExcelParser
 {
     static ExcelParser()
     {
-        // EPPlus 8+ NonCommercial license requirement
-        ExcelPackage.License.SetNonCommercialPersonal("Venus Zagros");
+        // EPPlus NonCommercial license requirement
+#pragma warning disable CS0618
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+#pragma warning restore CS0618
     }
 
     public static List<ExcelDataRow> ParseExcelFile(string filePath)
@@ -18,7 +20,7 @@ public static class ExcelParser
         var list = new List<ExcelDataRow>();
         if (!File.Exists(filePath))
         {
-            throw new FileNotFoundException("فایل اکسل یافت نشد.", filePath);
+            throw new FileNotFoundException("فایل داده‌ها یافت نشد.", filePath);
         }
 
         using (var package = new ExcelPackage(new FileInfo(filePath)))
@@ -26,7 +28,7 @@ public static class ExcelParser
             var worksheet = package.Workbook.Worksheets["data"];
             if (worksheet == null)
             {
-                throw new Exception("شیت با نام 'data' در فایل اکسل یافت نشد.");
+                throw new Exception("شیت با نام 'data' در فایل داده‌ها یافت نشد.");
             }
 
             int rowCount = worksheet.Dimension?.End.Row ?? 0;

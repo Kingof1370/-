@@ -21,6 +21,18 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         LoadIpSetting();
         DpReportDate.Date = DateTime.Now;
+        LoadLogoImage();
+    }
+
+    private void LoadLogoImage()
+    {
+        try
+        {
+            var assembly = typeof(MainPage).Assembly;
+            string resourceName = "ExcelClient.Android.logo.jpg";
+            ImgLogo.Source = ImageSource.FromStream(() => assembly.GetManifestResourceStream(resourceName));
+        }
+        catch {}
     }
 
     private void LoadIpSetting()

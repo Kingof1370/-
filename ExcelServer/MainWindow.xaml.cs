@@ -39,7 +39,7 @@ public partial class MainWindow
             {
                 _excelFilePath = File.ReadAllText(_settingsFilePath).Trim();
                 TxtExcelPath.Text = _excelFilePath;
-                Log($"مسیر ذخیره‌شده فایل اکسل بارگذاری شد: {_excelFilePath}");
+                Log($"مسیر ذخیره‌شده فایل داده‌ها بارگذاری شد: {_excelFilePath}");
             }
         }
         catch (Exception ex)
@@ -99,8 +99,8 @@ public partial class MainWindow
     {
         var openFileDialog = new Microsoft.Win32.OpenFileDialog
         {
-            Filter = "Excel Files (*.xlsx;*.xls)|*.xlsx;*.xls|All files (*.*)|*.*",
-            Title = "انتخاب فایل اکسل داده‌ها"
+            Filter = "Data Files (*.xlsx;*.xls)|*.xlsx;*.xls|All files (*.*)|*.*",
+            Title = "انتخاب فایل داده‌های مرجع"
         };
 
         if (openFileDialog.ShowDialog() == true)
@@ -108,7 +108,7 @@ public partial class MainWindow
             _excelFilePath = openFileDialog.FileName;
             TxtExcelPath.Text = _excelFilePath;
             SaveSettings();
-            Log($"فایل اکسل انتخاب شد: {_excelFilePath}");
+            Log($"فایل داده‌های مرجع انتخاب شد: {_excelFilePath}");
         }
     }
 
@@ -116,7 +116,7 @@ public partial class MainWindow
     {
         if (string.IsNullOrEmpty(_excelFilePath))
         {
-            System.Windows.MessageBox.Show("لطفاً ابتدا مسیر فایل اکسل را مشخص کنید.", "خطا", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show("لطفاً ابتدا مسیر فایل داده‌ها را مشخص کنید.", "خطا", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
 
@@ -130,14 +130,14 @@ public partial class MainWindow
         catch (Exception ex)
         {
             Log($"خطا در بارگذاری فایل: {ex.Message}");
-            System.Windows.MessageBox.Show($"خطا در بارگذاری فایل اکسل:\n{ex.Message}", "خطا", MessageBoxButton.OK, MessageBoxImage.Error);
+            System.Windows.MessageBox.Show($"خطا در بارگذاری فایل داده‌ها:\n{ex.Message}", "خطا", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private void BtnReloadFile_Click(object sender, RoutedEventArgs e)
     {
         ReloadExcelDataSilently();
-        System.Windows.MessageBox.Show("داده‌های اکسل با موفقیت مجدداً بارگذاری شد.", "اطلاعات", MessageBoxButton.OK, MessageBoxImage.Information);
+        System.Windows.MessageBox.Show("اطلاعات پایه با موفقیت مجدداً بارگذاری شد.", "اطلاعات", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void ReloadExcelDataSilently()
@@ -316,7 +316,7 @@ public partial class MainWindow
         {
             Icon = System.Drawing.SystemIcons.Application,
             Visible = true,
-            Text = "سرور گزارش‌گیری اکسل (علی بهمنی)"
+            Text = "سرور گزارش‌گیری و مانیتورینگ (علی بهمنی)"
         };
 
         _notifyIcon.DoubleClick += (s, e) => RestoreFromTray();

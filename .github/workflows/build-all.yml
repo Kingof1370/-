@@ -46,7 +46,7 @@ jobs:
 
     # Build Android App
     - name: Install .NET MAUI Workload
-      run: dotnet workload install maui-android --ignore-failed-sources
+      run: dotnet workload install maui-android --ignore-failed-sources --include-previews --allow-unsupported-packages
 
     - name: Restore NuGet Packages (ExcelClient.Android)
       run: dotnet restore ExcelClient.Android/ExcelClient.Android.csproj -p:CheckEolWorkloads=false -p:CheckEolTargetFrameworks=false

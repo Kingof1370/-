@@ -152,7 +152,7 @@ public partial class MainWindow : MetroWindow
     private void PopulateUI(ExcelDataRow data, string persianDate)
     {
         TxtPrintTitle.Text = $"سنگ آهن ونوس زاگرس - گزارش روزانه خط تولید - تاریخ: {persianDate}";
-        TxtPrintTitle.Visibility = Visibility.Visible;
+        PrintHeader.Visibility = Visibility.Visible;
 
         // SECTION 1: KPIs
         TxtFeedWeight1.Text = data.FeedWeight1.ToString("N2");
@@ -234,7 +234,7 @@ public partial class MainWindow : MetroWindow
 
     private void ClearUI()
     {
-        TxtPrintTitle.Visibility = Visibility.Collapsed;
+        PrintHeader.Visibility = Visibility.Collapsed;
 
         TxtFeedWeight1.Text = "--";
         TxtFeedGrade1.Text = "--";
@@ -295,7 +295,7 @@ public partial class MainWindow : MetroWindow
             PrintDialog printDialog = new PrintDialog();
             if (printDialog.ShowDialog() == true)
             {
-                printDialog.PrintVisual(PrintArea, "گزارش روزانه اکسل");
+                printDialog.PrintVisual(PrintArea, "گزارش روزانه معدن آهن ونوس زاگرس");
             }
         }
         catch (Exception ex)

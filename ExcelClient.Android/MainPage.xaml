@@ -11,8 +11,9 @@
             <!-- Header bar / App Banner with large golden text "سنگ آهن ونوس زاگرس" -->
             <Frame BackgroundColor="#1e3d59" CornerRadius="10" Padding="15" BorderColor="Transparent">
                 <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Image x:Name="ImgLogo" HeightRequest="80" WidthRequest="80" HorizontalOptions="Center" Margin="0,0,0,8" Aspect="AspectFit"/>
                     <Label Text="سنگ آهن ونوس زاگرس" FontSize="26" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#FFD700"/>
-                    <Label Text="کلاینت مانیتورینگ اندروید داده‌های اکسل" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                    <Label Text="کلاینت مانیتورینگ و گزارش‌گیری اندروید" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
                     <Label Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" HorizontalOptions="Center" TextColor="#dddddd"/>
                 </VerticalStackLayout>
             </Frame>

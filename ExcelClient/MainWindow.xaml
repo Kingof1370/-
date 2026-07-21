@@ -23,15 +23,17 @@
         <Border Grid.Row="0" Background="#1e3d59" CornerRadius="5" Padding="12" Margin="0,0,0,15">
             <Grid>
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
+                <Image Grid.Column="0" Source="logo.jpg" Width="70" Height="70" Margin="0,0,15,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
                     <TextBlock Text="سنگ آهن ونوس زاگرس" FontSize="26" FontWeight="Bold" Foreground="#FFD700" Margin="0,0,0,5"/>
-                    <TextBlock Text="سیستم مانیتورینگ و گزارش‌گیری داده‌های اکسل (کلاینت مدیر)" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                    <TextBlock Text="سیستم مانیتورینگ و گزارش‌گیری مدیریت" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
                     <TextBlock Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" Foreground="#dddddd" Margin="0,5,0,0"/>
                 </StackPanel>
-                <Button x:Name="BtnPrint" Grid.Column="1" Content="پرینت و خروجی PDF" Width="180" Height="40" Background="#17b978" Foreground="White" FontWeight="Bold" Click="BtnPrint_Click" VerticalAlignment="Center"/>
+                <Button x:Name="BtnPrint" Grid.Column="2" Content="پرینت و خروجی PDF" Width="180" Height="40" Background="#17b978" Foreground="White" FontWeight="Bold" Click="BtnPrint_Click" VerticalAlignment="Center"/>
             </Grid>
         </Border>
 
@@ -60,8 +62,18 @@
         <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="PrintArea" Background="White">
 
-                <!-- Report Title inside Printable Area -->
-                <TextBlock x:Name="TxtPrintTitle" Text="سنگ آهن ونوس زاگرس - گزارش روزانه خط تولید" FontSize="18" FontWeight="Bold" Foreground="#1e3d59" HorizontalAlignment="Center" Margin="0,10,0,20" Visibility="Collapsed"/>
+                <!-- Report Header inside Printable Area -->
+                <Grid x:Name="PrintHeader" Visibility="Collapsed" Margin="10,10,10,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Source="logo.jpg" Width="80" Height="80" Margin="0,0,15,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock x:Name="TxtPrintTitle" Text="سنگ آهن ونوس زاگرس - گزارش روزانه خط تولید" FontSize="20" FontWeight="Bold" Foreground="#1e3d59" Margin="0,0,0,5"/>
+                        <TextBlock Text="سامانه مانیتورینگ و گزارش‌گیری یکپارچه تولید" FontSize="12" Foreground="#555555"/>
+                    </StackPanel>
+                </Grid>
 
                 <!-- Section 1: KPI Indicators (شاخص‌های کلیدی) -->
                 <GroupBox Header="بخش اول: شاخص‌های کلیدی" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">

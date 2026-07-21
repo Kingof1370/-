@@ -22,6 +22,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="logo.jpg" />
+  </ItemGroup>
+
   <!-- Overwrite workload checking target to allow compiling net8.0-android on modern SDK environments -->
   <Target Name="_CheckForMissingWorkload" />
 

@@ -20,25 +20,32 @@
 
         <!-- Top Header Panel with Description -->
         <Border Grid.Row="0" Background="#1e3d59" CornerRadius="5" Padding="12" Margin="0,0,0,15">
-            <StackPanel>
-                <TextBlock Text="سنگ آهن ونوس زاگرس" FontSize="26" FontWeight="Bold" Foreground="#FFD700" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                <TextBlock Text="سیستم سرور گزارش‌گیری داده‌های اکسل" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,5"/>
-                <TextBlock Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" Foreground="#dddddd" HorizontalAlignment="Center"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="logo.jpg" Width="80" Height="80" Margin="0,0,15,0" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="سنگ آهن ونوس زاگرس" FontSize="26" FontWeight="Bold" Foreground="#FFD700" Margin="0,0,0,5"/>
+                    <TextBlock Text="سیستم سرور گزارش‌گیری و مانیتورینگ" FontSize="14" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,5"/>
+                    <TextBlock Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" Foreground="#dddddd"/>
+                </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Main Content Area -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <!-- Step 1: File Selection and Loading -->
-                <GroupBox Header="تنظیمات فایل اکسل و بارگذاری داده‌ها" Margin="0,0,0,10">
+                <GroupBox Header="تنظیمات بانک اطلاعاتی و بارگذاری داده‌ها" Margin="0,0,0,10">
                     <StackPanel Margin="10">
                         <Grid Margin="0,0,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="TxtExcelPath" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" mah:TextBoxHelper.Watermark="مسیر فایل اکسل را انتخاب کنید..." Height="30" IsReadOnly="True"/>
+                            <TextBox x:Name="TxtExcelPath" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" mah:TextBoxHelper.Watermark="مسیر فایل داده‌ها را انتخاب کنید..." Height="30" IsReadOnly="True"/>
                             <Button x:Name="BtnBrowse" Grid.Column="1" Content="انتخاب فایل (Browse)" Width="150" Height="30" Click="BtnBrowse_Click"/>
                         </Grid>
                         <Grid>
@@ -46,7 +53,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="BtnLoadFile" Grid.Column="0" Content="بارگذاری فایل اکسل" Height="35" Margin="0,0,5,0" Background="#17b978" Foreground="White" Click="BtnLoadFile_Click"/>
+                            <Button x:Name="BtnLoadFile" Grid.Column="0" Content="بارگذاری اطلاعات پایه" Height="35" Margin="0,0,5,0" Background="#17b978" Foreground="White" Click="BtnLoadFile_Click"/>
                             <Button x:Name="BtnReloadFile" Grid.Column="1" Content="بارگذاری مجدد (بدون قطع سرور)" Height="35" Margin="5,0,0,0" Background="#ff304f" Foreground="White" Click="BtnReloadFile_Click"/>
                         </Grid>
                     </StackPanel>
