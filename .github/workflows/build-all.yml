@@ -46,14 +46,16 @@ jobs:
 
     # Build Android App
     - name: Install .NET MAUI Workload
-      run: dotnet workload install maui-android --ignore-failed-sources
+      run: |
+        dotnet workload restore ExcelClient.Android/ExcelClient.Android.csproj
+        dotnet workload install maui-android
 
     - name: Restore NuGet Packages (ExcelClient.Android)
-      run: dotnet restore ExcelClient.Android/ExcelClient.Android.csproj -p:CheckEolWorkloads=false -p:CheckEolTargetFrameworks=false
+      run: dotnet restore ExcelClient.Android/ExcelClient.Android.csproj
 
     - name: Build ExcelClient.Android (Unsigned APK)
       run: |
-        dotnet publish ExcelClient.Android/ExcelClient.Android.csproj -c Release -f net8.0-android -p:CheckEolWorkloads=false -p:CheckEolTargetFrameworks=false -o publish-android
+        dotnet publish ExcelClient.Android/ExcelClient.Android.csproj -c Release -f net8.0-android -o publish-android
 
     # Prepare files for Release
     - name: Prepare Assets
