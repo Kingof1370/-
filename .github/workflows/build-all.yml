@@ -7,48 +7,11 @@ on:
     branches: [ "**" ]
 
 jobs:
-  build-windows:
-    name: Build Windows Apps (WPF)
+  build-and-release:
+    name: Build and Create Release
     runs-on: windows-latest
-
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v4
-
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-
-    - name: Restore NuGet Packages (ExcelServer)
-      run: dotnet restore ExcelServer/ExcelServer.csproj
-
-    - name: Build ExcelServer (WPF - Self-Contained Single EXE)
-      run: |
-        dotnet publish ExcelServer/ExcelServer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-server
-
-    - name: Restore NuGet Packages (ExcelClient)
-      run: dotnet restore ExcelClient/ExcelClient.csproj
-
-    - name: Build ExcelClient (WPF - Self-Contained Single EXE)
-      run: |
-        dotnet publish ExcelClient/ExcelClient.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-client
-
-    - name: Upload ExcelServer Executable
-      uses: actions/upload-artifact@v4
-      with:
-        name: ExcelServer-Windows-x64
-        path: publish-server/ExcelServer.exe
-
-    - name: Upload ExcelClient Executable
-      uses: actions/upload-artifact@v4
-      with:
-        name: ExcelClient-Windows-x64
-        path: publish-client/ExcelClient.exe
-
-  build-android:
-    name: Build Android App (MAUI)
-    runs-on: windows-latest
+    permissions:
+      contents: write
 
     steps:
     - name: Checkout Repository
@@ -65,6 +28,23 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
+    # Build ExcelServer
+    - name: Restore NuGet Packages (ExcelServer)
+      run: dotnet restore ExcelServer/ExcelServer.csproj
+
+    - name: Build ExcelServer (WPF - Self-Contained Single EXE)
+      run: |
+        dotnet publish ExcelServer/ExcelServer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-server
+
+    # Build ExcelClient
+    - name: Restore NuGet Packages (ExcelClient)
+      run: dotnet restore ExcelClient/ExcelClient.csproj
+
+    - name: Build ExcelClient (WPF - Self-Contained Single EXE)
+      run: |
+        dotnet publish ExcelClient/ExcelClient.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-client
+
+    # Build Android App
     - name: Install .NET MAUI Workload
       run: dotnet workload install maui-android --ignore-failed-sources
 
@@ -75,8 +55,27 @@ jobs:
       run: |
         dotnet publish ExcelClient.Android/ExcelClient.Android.csproj -c Release -f net8.0-android -o publish-android
 
-    - name: Upload ExcelClient Android APK
-      uses: actions/upload-artifact@v4
+    # Prepare files for Release
+    - name: Prepare Assets
+      shell: bash
+      run: |
+        mkdir -p release-assets
+        cp publish-server/ExcelServer.exe release-assets/
+        cp publish-client/ExcelClient.exe release-assets/
+        cp publish-android/*-Signed.apk release-assets/ExcelClient.apk || cp publish-android/*.apk release-assets/ExcelClient.apk
+
+    # Create GitHub Release with direct static links
+    - name: Create GitHub Release and Upload Assets
+      uses: softprops/action-gh-release@v2
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
       with:
-        name: ExcelClient-Android-APK
-        path: publish-android/*-Signed.apk
+        tag_name: v1.0.0
+        name: Release v1.0.0 - Venus Zagros Excel reporting
+        draft: false
+        prerelease: false
+        files: |
+          release-assets/ExcelServer.exe
+          release-assets/ExcelClient.exe
+          release-assets/ExcelClient.apk
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
