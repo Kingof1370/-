@@ -1,0 +1,218 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExcelClient.Android.MainPage"
+             Title="توسعه‌دهنده: علی بهمنی | 09915420558"
+             BackgroundColor="#f5f5f5"
+             FlowDirection="RightToLeft">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="15" Spacing="12">
+
+            <!-- Header bar / App Banner with large golden text "سنگ آهن ونوس زاگرس" -->
+            <Frame BackgroundColor="#1e3d59" CornerRadius="10" Padding="15" BorderColor="Transparent">
+                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                    <Label Text="سنگ آهن ونوس زاگرس" FontSize="26" FontAttributes="Bold" HorizontalOptions="Center" TextColor="#FFD700"/>
+                    <Label Text="کلاینت مانیتورینگ اندروید داده‌های اکسل" FontSize="14" FontAttributes="Bold" HorizontalOptions="Center" TextColor="White"/>
+                    <Label Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" HorizontalOptions="Center" TextColor="#dddddd"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Configuration Frame (IP and Date Picker) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="تنظیمات ارتباطی" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+
+                    <Label Text="آدرس IP سرور:" FontSize="12" TextColor="#555555"/>
+                    <Entry x:Name="EntServerIp" Placeholder="مثال: 192.168.1.10" Keyboard="Numeric" HeightRequest="45"/>
+
+                    <Label Text="انتخاب تاریخ گزارش:" FontSize="12" TextColor="#555555"/>
+                    <DatePicker x:Name="DpReportDate" Format="yyyy-MM-dd" HeightRequest="45"/>
+
+                    <Grid ColumnDefinitions="*, *" ColumnSpacing="10" Margin="0,10,0,0">
+                        <Button x:Name="BtnFetch" Grid.Column="0" Text="دریافت گزارش" BackgroundColor="#1e3d59" TextColor="White" FontAttributes="Bold" Clicked="OnBtnFetchClicked" HeightRequest="45"/>
+                        <Button x:Name="BtnShare" Grid.Column="1" Text="اشتراک‌گذاری" BackgroundColor="#17b978" TextColor="White" FontAttributes="Bold" Clicked="OnBtnShareClicked" HeightRequest="45"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 1: KPI Indicators (شاخص‌های کلیدی) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش اول: شاخص‌های کلیدی" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Grid ColumnDefinitions="*, *, *" RowDefinitions="Auto, Auto" ColumnSpacing="6" RowSpacing="6">
+                        <!-- Weight -->
+                        <Frame Grid.Column="0" Grid.Row="0" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="وزن خوراک م1" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblFeedWeight1" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Grade -->
+                        <Frame Grid.Column="1" Grid.Row="0" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="عیار خوراک م1" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblFeedGrade1" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Recovery 1 -->
+                        <Frame Grid.Column="2" Grid.Row="0" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="بازیابی مرحله1" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblRecoveryStage1" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Recovery 2 -->
+                        <Frame Grid.Column="0" Grid.Row="1" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="بازیابی مرحله2" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblRecoveryStage2" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Scavenger Recovery -->
+                        <Frame Grid.Column="1" Grid.Row="1" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="بازیابی رمق‌گیری" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblRecoveryScavenger" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- Total Recovery -->
+                        <Frame Grid.Column="2" Grid.Row="1" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="بازیابی کل" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblRecoveryTotal" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 2: Mass Balance (موازنه جرم) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش دوم: موازنه جرم" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="6">
+                        <!-- MB 1 -->
+                        <Frame x:Name="FrameMass1" Grid.Column="0" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="موازنه م1" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblMassBalanceStage1" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- MB 2 -->
+                        <Frame x:Name="FrameMass2" Grid.Column="1" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="موازنه م2" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblMassBalanceStage2" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <!-- MB Scavenger -->
+                        <Frame x:Name="FrameMassScavenger" Grid.Column="2" Padding="8" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="موازنه رمق‌گیری" FontSize="10" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblMassBalanceScavenger" Text="--" FontSize="14" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 3: Sales and Stock (فروش و استوک) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش سوم: فروش و استوک" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto" ColumnSpacing="8" RowSpacing="8">
+                        <VerticalStackLayout Grid.Column="0" Grid.Row="0">
+                            <Label Text="فروش تجمعی (تن):" FontSize="11" TextColor="#555555"/>
+                            <Label x:Name="LblCumulativeSales" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="0">
+                            <Label Text="حمل تجمعی به استوک (تن):" FontSize="11" TextColor="#555555"/>
+                            <Label x:Name="LblCumulativeCarryStock" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="0" Grid.Row="1">
+                            <Label Text="مانده استوک پایل (تن):" FontSize="11" TextColor="#555555"/>
+                            <Label x:Name="LblRemainingPileStock" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Grid.Row="1">
+                            <Label Text="میانگین عیار فروش (%):" FontSize="11" TextColor="#555555"/>
+                            <Label x:Name="LblAverageSalesGrade" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
+                            <Label Text="میانگین عیار حمل به استوک (%):" FontSize="11" TextColor="#555555"/>
+                            <Label x:Name="LblAverageCarryStockGrade" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 4: Resources and Consumption (منابع و مصارف) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش چهارم: منابع و مصارف" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Grid ColumnDefinitions="*, *, *" ColumnSpacing="6">
+                        <VerticalStackLayout Grid.Column="0">
+                            <Label Text="پرسنل (نفر)" FontSize="10" TextColor="#666666"/>
+                            <Label x:Name="LblPersonnelCount" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1">
+                            <Label Text="گازوئیل (لیتر)" FontSize="10" TextColor="#666666"/>
+                            <Label x:Name="LblDieselConsumption" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="2">
+                            <Label Text="کارکرد خط (ساعت)" FontSize="10" TextColor="#666666"/>
+                            <Label x:Name="LblLineOperatingHours" Text="--" FontSize="15" FontAttributes="Bold" TextColor="#333333"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 5: Separator Status (وضعیت سپراتورها) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش پنجم: وضعیت سپراتورها" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Grid ColumnDefinitions="*, *, *, *, *" ColumnSpacing="4">
+                        <Frame x:Name="FrameSepPre1" Grid.Column="0" Padding="4" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="پیش1" FontSize="9" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblSepPre1" Text="--" FontSize="11" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame x:Name="FrameSepPre2" Grid.Column="1" Padding="4" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="پیش2" FontSize="9" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblSepPre2" Text="--" FontSize="11" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame x:Name="FrameSepProc1" Grid.Column="2" Padding="4" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="فرآوری1" FontSize="9" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblSepProc1" Text="--" FontSize="11" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame x:Name="FrameSepProc2" Grid.Column="3" Padding="4" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="فرآوری2" FontSize="9" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblSepProc2" Text="--" FontSize="11" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        <Frame x:Name="FrameSepScav" Grid.Column="4" Padding="4" BackgroundColor="#fcfcfc" BorderColor="#eeeeee">
+                            <VerticalStackLayout HorizontalOptions="Center">
+                                <Label Text="رمق‌گیری" FontSize="9" TextColor="#666666" HorizontalOptions="Center"/>
+                                <Label x:Name="LblSepScav" Text="--" FontSize="11" FontAttributes="Bold" TextColor="#333333" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </Grid>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Section 6: Text Report (گزارش متنی) -->
+            <Frame CornerRadius="8" Padding="12" BackgroundColor="White" BorderColor="#dddddd">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="بخش ششم: گزارش متنی و توضیحات" FontSize="14" FontAttributes="Bold" TextColor="#1e3d59"/>
+                    <Editor x:Name="EdReportText" HeightRequest="120" IsReadOnly="True" BackgroundColor="#fafafa" TextColor="#333333" FontSize="13"/>
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

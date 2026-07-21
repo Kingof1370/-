@@ -1,0 +1,240 @@
+<mah:MetroWindow x:Class="ExcelClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:ExcelClient"
+        mc:Ignorable="d"
+        Title="توسعه‌دهنده: علی بهمنی | 09915420558"
+        Height="800" Width="1000"
+        TitleAlignment="Center"
+        FlowDirection="RightToLeft"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header Bar -->
+        <Border Grid.Row="0" Background="#1e3d59" CornerRadius="5" Padding="12" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="سنگ آهن ونوس زاگرس" FontSize="26" FontWeight="Bold" Foreground="#FFD700" Margin="0,0,0,5"/>
+                    <TextBlock Text="سیستم مانیتورینگ و گزارش‌گیری داده‌های اکسل (کلاینت مدیر)" FontSize="14" FontWeight="SemiBold" Foreground="White"/>
+                    <TextBlock Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" Foreground="#dddddd" Margin="0,5,0,0"/>
+                </StackPanel>
+                <Button x:Name="BtnPrint" Grid.Column="1" Content="پرینت و خروجی PDF" Width="180" Height="40" Background="#17b978" Foreground="White" FontWeight="Bold" Click="BtnPrint_Click" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+
+        <!-- Server IP & DatePicker Selection Bar -->
+        <Border Grid.Row="1" BorderBrush="#cccccc" BorderThickness="1" CornerRadius="5" Padding="10" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0" Text="آدرس IP سرور:" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <TextBox x:Name="TxtServerIp" Grid.Column="1" Height="30" VerticalContentAlignment="Center" mah:TextBoxHelper.Watermark="مثال: 192.168.1.10" Margin="0,0,20,0"/>
+
+                <TextBlock Grid.Column="2" Text="انتخاب تاریخ گزارش:" VerticalAlignment="Center" FontSize="13" FontWeight="SemiBold" Margin="0,0,10,0"/>
+                <DatePicker x:Name="DpReportDate" Grid.Column="3" Height="30" VerticalContentAlignment="Center" Margin="0,0,20,0"/>
+
+                <Button x:Name="BtnFetchReport" Grid.Column="4" Content="دریافت گزارش از سرور" Height="35" Background="#1e3d59" Foreground="White" FontWeight="Bold" Click="BtnFetchReport_Click"/>
+            </Grid>
+        </Border>
+
+        <!-- Printable Area Grid -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="PrintArea" Background="White">
+
+                <!-- Report Title inside Printable Area -->
+                <TextBlock x:Name="TxtPrintTitle" Text="سنگ آهن ونوس زاگرس - گزارش روزانه خط تولید" FontSize="18" FontWeight="Bold" Foreground="#1e3d59" HorizontalAlignment="Center" Margin="0,10,0,20" Visibility="Collapsed"/>
+
+                <!-- Section 1: KPI Indicators (شاخص‌های کلیدی) -->
+                <GroupBox Header="بخش اول: شاخص‌های کلیدی" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">
+                    <UniformGrid Columns="3" Margin="5">
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="وزن خوراک مرحله1" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtFeedWeight1" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="عیار خوراک مرحله1 (Fe%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtFeedGrade1" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="بازیابی مرحله1 (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtRecoveryStage1" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="بازیابی مرحله2 (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtRecoveryStage2" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="بازیابی رمق‌گیری (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtRecoveryScavenger" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="بازیابی کل (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtRecoveryTotal" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Section 2: Mass Balance -->
+                <GroupBox Header="بخش دوم: موازنه جرم" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">
+                    <UniformGrid Columns="3" Margin="5">
+                        <Border x:Name="BorderMass1" BorderBrush="#cccccc" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="موازنه جرم مرحله1" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtMassBalanceStage1" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderMass2" BorderBrush="#cccccc" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="موازنه جرم مرحله2" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtMassBalanceStage2" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderMassScavenger" BorderBrush="#cccccc" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="موازنه جرم رمق‌گیری" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtMassBalanceScavenger" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Section 3: Sales and Stock -->
+                <GroupBox Header="بخش سوم: فروش و استوک" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">
+                    <UniformGrid Columns="3" Margin="5">
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="فروش تجمعی (تن)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtCumulativeSales" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="حمل به استوک تجمعی (تن)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtCumulativeCarryStock" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="مانده استوک پایل (تن)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtRemainingPileStock" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="میانگین عیار فروش (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtAverageSalesGrade" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd" Grid.ColumnSpan="2">
+                            <StackPanel>
+                                <TextBlock Text="میانگین عیار حمل به استوک (%)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtAverageCarryStockGrade" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Section 4: Resources and Consumption -->
+                <GroupBox Header="بخش چهارم: منابع و مصارف" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">
+                    <UniformGrid Columns="3" Margin="5">
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="تعداد پرسنل (نفر)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtPersonnelCount" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="مصرف گازوئیل (لیتر)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtDieselConsumption" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border BorderBrush="#f1f1f1" BorderThickness="1" Margin="5" Padding="10" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="ساعت کارکرد خط (ساعت)" FontSize="11" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtLineOperatingHours" Text="--" FontSize="16" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Section 5: Separator Status -->
+                <GroupBox Header="بخش پنجم: وضعیت سپراتورها" Margin="0,0,0,15" BorderThickness="1" BorderBrush="#1e3d59">
+                    <UniformGrid Columns="5" Margin="5">
+                        <Border x:Name="BorderSepPre1" BorderBrush="#cccccc" BorderThickness="1" Margin="3" Padding="8" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="پیش‌فرآوری 1" FontSize="10" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtSepPre1" Text="--" FontSize="14" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderSepPre2" BorderBrush="#cccccc" BorderThickness="1" Margin="3" Padding="8" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="پیش‌فرآوری 2" FontSize="10" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtSepPre2" Text="--" FontSize="14" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderSepProc1" BorderBrush="#cccccc" BorderThickness="1" Margin="3" Padding="8" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="فرآوری 1" FontSize="10" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtSepProc1" Text="--" FontSize="14" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderSepProc2" BorderBrush="#cccccc" BorderThickness="1" Margin="3" Padding="8" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="فرآوری 2" FontSize="10" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtSepProc2" Text="--" FontSize="14" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                        <Border x:Name="BorderSepScav" BorderBrush="#cccccc" BorderThickness="1" Margin="3" Padding="8" Background="#fdfdfd">
+                            <StackPanel>
+                                <TextBlock Text="رمق‌گیری" FontSize="10" Foreground="#555555" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TxtSepScav" Text="--" FontSize="14" FontWeight="Bold" Foreground="#2c3e50" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Border>
+                    </UniformGrid>
+                </GroupBox>
+
+                <!-- Section 6: Text Report -->
+                <GroupBox Header="بخش ششم: گزارش متنی و توضیحات" BorderThickness="1" BorderBrush="#1e3d59" Margin="0,0,0,10">
+                    <TextBox x:Name="TxtReportText" Height="100" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#fcfcfc" Padding="10" FontSize="13"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Developer Bottom Bar -->
+        <Border Grid.Row="3" Background="#1e3d59" Padding="5" CornerRadius="3" Margin="0,10,0,0">
+            <TextBlock Text="طراحی و توسعه: علی بهمنی | شماره تماس: 09915420558" Foreground="White" HorizontalAlignment="Center" FontSize="11"/>
+        </Border>
+    </Grid>
+</mah:MetroWindow>

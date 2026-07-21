@@ -1,0 +1,82 @@
+name: Build All Apps (CI/CD)
+
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build-windows:
+    name: Build Windows Apps (WPF)
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore NuGet Packages (ExcelServer)
+      run: dotnet restore ExcelServer/ExcelServer.csproj
+
+    - name: Build ExcelServer (WPF - Self-Contained Single EXE)
+      run: |
+        dotnet publish ExcelServer/ExcelServer.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-server
+
+    - name: Restore NuGet Packages (ExcelClient)
+      run: dotnet restore ExcelClient/ExcelClient.csproj
+
+    - name: Build ExcelClient (WPF - Self-Contained Single EXE)
+      run: |
+        dotnet publish ExcelClient/ExcelClient.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:PublishReadyToRun=true -p:IncludeNativeLibrariesForSelfExtract=true -o publish-client
+
+    - name: Upload ExcelServer Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: ExcelServer-Windows-x64
+        path: publish-server/ExcelServer.exe
+
+    - name: Upload ExcelClient Executable
+      uses: actions/upload-artifact@v4
+      with:
+        name: ExcelClient-Windows-x64
+        path: publish-client/ExcelClient.exe
+
+  build-android:
+    name: Build Android App (MAUI)
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup Java JDK
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Install .NET MAUI Workload
+      run: dotnet workload install maui-android --ignore-failed-sources
+
+    - name: Restore NuGet Packages (ExcelClient.Android)
+      run: dotnet restore ExcelClient.Android/ExcelClient.Android.csproj
+
+    - name: Build ExcelClient.Android (Unsigned APK)
+      run: |
+        dotnet publish ExcelClient.Android/ExcelClient.Android.csproj -c Release -f net8.0-android -o publish-android
+
+    - name: Upload ExcelClient Android APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: ExcelClient-Android-APK
+        path: publish-android/*-Signed.apk

@@ -1,0 +1,92 @@
+<mah:MetroWindow x:Class="ExcelServer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:local="clr-namespace:ExcelServer"
+        mc:Ignorable="d"
+        Title="توسعه‌دهنده: علی بهمنی | 09915420558"
+        Height="580" Width="700"
+        TitleAlignment="Center"
+        FlowDirection="RightToLeft"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Top Header Panel with Description -->
+        <Border Grid.Row="0" Background="#1e3d59" CornerRadius="5" Padding="12" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="سنگ آهن ونوس زاگرس" FontSize="26" FontWeight="Bold" Foreground="#FFD700" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="سیستم سرور گزارش‌گیری داده‌های اکسل" FontSize="14" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                <TextBlock Text="توسعه‌دهنده: علی بهمنی | 09915420558" FontSize="11" Foreground="#dddddd" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Main Content Area -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- Step 1: File Selection and Loading -->
+                <GroupBox Header="تنظیمات فایل اکسل و بارگذاری داده‌ها" Margin="0,0,0,10">
+                    <StackPanel Margin="10">
+                        <Grid Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox x:Name="TxtExcelPath" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" mah:TextBoxHelper.Watermark="مسیر فایل اکسل را انتخاب کنید..." Height="30" IsReadOnly="True"/>
+                            <Button x:Name="BtnBrowse" Grid.Column="1" Content="انتخاب فایل (Browse)" Width="150" Height="30" Style="{StaticResource MahApps.Templates.Button.MetroSquare}" Click="BtnBrowse_Click"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="BtnLoadFile" Grid.Column="0" Content="بارگذاری فایل اکسل" Height="35" Margin="0,0,5,0" Background="#17b978" Foreground="White" Click="BtnLoadFile_Click"/>
+                            <Button x:Name="BtnReloadFile" Grid.Column="1" Content="بارگذاری مجدد (بدون قطع سرور)" Height="35" Margin="5,0,0,0" Background="#ff304f" Foreground="White" Click="BtnReloadFile_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Step 2: TCP Server Controls -->
+                <GroupBox Header="کنترل سرور TCP" Margin="0,0,0,10">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="آدرس محلی و پورت سرور: Port 12345" FontSize="13" Foreground="#2c3e50" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="BtnStartServer" Grid.Column="0" Content="شروع سرور" Height="40" Margin="0,0,5,0" Background="#438a5e" Foreground="White" FontSize="14" FontWeight="Bold" Click="BtnStartServer_Click"/>
+                            <Button x:Name="BtnStopServer" Grid.Column="1" Content="توقف سرور (قطع کلاینت‌ها)" Height="40" Margin="5,0,0,0" Background="#c0392b" Foreground="White" FontSize="14" FontWeight="Bold" Click="BtnStopServer_Click"/>
+                        </Grid>
+                    </StackPanel>
+                </GroupBox>
+
+                <!-- Step 3: Logs/Activities -->
+                <GroupBox Header="گزارشات و رویدادهای سرور">
+                    <TextBox x:Name="TxtLogs" Height="150" IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" Background="#2c3e50" Foreground="#2ecc71" FontFamily="Consolas" Padding="10"/>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Status Bar -->
+        <StatusBar Grid.Row="2" Background="#1e3d59" Foreground="White" Margin="0,15,0,0" Padding="5">
+            <StatusBarItem>
+                <TextBlock x:Name="LblServerStatus" Text="وضعیت: متوقف" FontWeight="Bold"/>
+            </StatusBarItem>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"/>
+            <StatusBarItem>
+                <TextBlock x:Name="LblLocalIP" Text="IP محلی: 127.0.0.1"/>
+            </StatusBarItem>
+            <Separator Style="{StaticResource MetroStatusBarSeparator}"/>
+            <StatusBarItem>
+                <TextBlock x:Name="LblLastUpdate" Text="آخرین به‌روزرسانی: --"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</mah:MetroWindow>
