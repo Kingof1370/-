@@ -1,18 +1,12 @@
-using System;
-using Android.App;
-using Android.Runtime;
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
-
 namespace ExcelClient.Android;
 
-[Application]
-public class MainApplication : MauiApplication
+[global::Android.App.ApplicationAttribute]
+public class MainApplication : global::Microsoft.Maui.MauiApplication
 {
-    public MainApplication(IntPtr handle, JniHandleOwnership ownership)
+    public MainApplication(global::System.IntPtr handle, global::Android.Runtime.JniHandleOwnership ownership)
         : base(handle, ownership)
     {
     }
 
-    protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+    protected override global::Microsoft.Maui.Hosting.MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
 }
