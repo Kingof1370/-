@@ -39,7 +39,7 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox x:Name="TxtExcelPath" Grid.Column="0" Margin="0,0,10,0" VerticalAlignment="Center" mah:TextBoxHelper.Watermark="مسیر فایل اکسل را انتخاب کنید..." Height="30" IsReadOnly="True"/>
-                            <Button x:Name="BtnBrowse" Grid.Column="1" Content="انتخاب فایل (Browse)" Width="150" Height="30" Style="{StaticResource MahApps.Templates.Button.MetroSquare}" Click="BtnBrowse_Click"/>
+                            <Button x:Name="BtnBrowse" Grid.Column="1" Content="انتخاب فایل (Browse)" Width="150" Height="30" Click="BtnBrowse_Click"/>
                         </Grid>
                         <Grid>
                             <Grid.ColumnDefinitions>

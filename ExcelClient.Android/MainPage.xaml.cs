@@ -7,6 +7,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
 
 namespace ExcelClient.Android;
 
