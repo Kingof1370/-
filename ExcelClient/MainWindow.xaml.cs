@@ -30,16 +30,7 @@ public partial class MainWindow : MetroWindow
             catch {}
         }
 
-        // Apply Persian Culture to the DatePicker & window
-        try
-        {
-            var persianCulture = new CultureInfo("fa-IR");
-            System.Threading.Thread.CurrentThread.CurrentCulture = persianCulture;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = persianCulture;
-            DpReportDate.Language = System.Windows.Markup.XmlLanguage.GetLanguage("fa-IR");
-        }
-        catch {}
-
+        // Culture already set to Persian in App.xaml.cs — just set default date
         DpReportDate.SelectedDate = DateTime.Now;
     }
 

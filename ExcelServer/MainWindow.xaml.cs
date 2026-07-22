@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using System.Globalization;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -86,11 +87,18 @@ public partial class MainWindow
         _autoReloadTimer.Start();
     }
 
+    private static string GetPersianNow()
+    {
+        var pc = new PersianCalendar();
+        var now = DateTime.Now;
+        return $"{pc.GetYear(now):D4}/{pc.GetMonth(now):D2}/{pc.GetDayOfMonth(now):D2} {now:HH:mm:ss}";
+    }
+
     private void Log(string message)
     {
         Dispatcher.Invoke(() =>
         {
-            TxtLogs.AppendText($"[{DateTime.Now:HH:mm:ss}] {message}\n");
+            TxtLogs.AppendText($"[{GetPersianNow()}] {message}\n");
             TxtLogs.ScrollToEnd();
         });
     }
@@ -123,7 +131,7 @@ public partial class MainWindow
         try
         {
             _loadedData = ExcelParser.ParseExcelFile(_excelFilePath);
-            LblLastUpdate.Text = $"آخرین به‌روزرسانی: {DateTime.Now:HH:mm:ss}";
+            LblLastUpdate.Text = $"آخرین به‌روزرسانی: {GetPersianNow()}";
             Log($"فایل با موفقیت بارگذاری شد. تعداد ردیف‌های یافت‌شده: {_loadedData.Count}");
             System.Windows.MessageBox.Show($"فایل با موفقیت بارگذاری شد. تعداد ردیف‌ها: {_loadedData.Count}", "موفقیت", MessageBoxButton.OK, MessageBoxImage.Information);
         }
@@ -153,7 +161,7 @@ public partial class MainWindow
             _loadedData = ExcelParser.ParseExcelFile(_excelFilePath);
             Dispatcher.Invoke(() =>
             {
-                LblLastUpdate.Text = $"آخرین به‌روزرسانی: {DateTime.Now:HH:mm:ss}";
+                LblLastUpdate.Text = $"آخرین به‌روزرسانی: {GetPersianNow()}";
             });
             Log($"بارگذاری مجدد موفقیت‌آمیز بود. تعداد کل ردیف‌ها: {_loadedData.Count}");
         }

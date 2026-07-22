@@ -21,6 +21,22 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         LoadIpSetting();
         DpReportDate.Date = DateTime.Now;
+        UpdatePersianDateLabel();
+    }
+
+    private void UpdatePersianDateLabel()
+    {
+        LblPersianDate.Text = GetPersianDateString(DpReportDate.Date);
+    }
+
+    private void OnPickDateClicked(object sender, EventArgs e)
+    {
+        DpReportDate.Focus();
+    }
+
+    private void OnDateSelected(object sender, DateChangedEventArgs e)
+    {
+        UpdatePersianDateLabel();
     }
 
     private void LoadIpSetting()
